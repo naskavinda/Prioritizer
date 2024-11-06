@@ -10,7 +10,6 @@ import {
   TextField, 
   Box, 
   Typography, 
-  Container, 
   Paper,
   Grid
 } from '@mui/material';
@@ -57,24 +56,26 @@ export const Login = () => {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        bgcolor: '#4338ca', // Indigo background color
+        width: '100vw',
+        height: '100vh',
+        background: '#f5f5f5',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 4
+        padding: { xs: 2, sm: 4 }
       }}
     >
       <Paper
-        elevation={3}
+        elevation={8}
         sx={{
           display: 'flex',
-          borderRadius: 4,
+          borderRadius: 3,
           overflow: 'hidden',
           width: '100%',
-          maxWidth: 1000,
-          minHeight: 600,
-          bgcolor: 'white'
+          maxWidth: '1000px',
+          minHeight: { xs: 'auto', md: '600px' },
+          bgcolor: 'background.paper',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
         }}
       >
         <Grid container>
@@ -93,7 +94,9 @@ export const Login = () => {
                 component="h1"
                 sx={{ 
                   mb: 4,
-                  fontWeight: 600
+                  fontWeight: 700,
+                  color: 'text.primary',
+                  fontSize: { xs: '1.75rem', md: '2rem' }
                 }}
               >
                 Login
@@ -113,7 +116,14 @@ export const Login = () => {
                       label="Email or Phone Number"
                       error={touched.emailOrPhone && !!errors.emailOrPhone}
                       helperText={touched.emailOrPhone && errors.emailOrPhone}
-                      sx={{ mb: 2 }}
+                      sx={{ 
+                        mb: 2,
+                        '& .MuiOutlinedInput-root': {
+                          '&:hover fieldset': {
+                            borderColor: 'primary.main',
+                          }
+                        }
+                      }}
                     />
                     
                     <Field
@@ -124,7 +134,14 @@ export const Login = () => {
                       label="Password"
                       error={touched.password && !!errors.password}
                       helperText={touched.password && errors.password}
-                      sx={{ mb: 1 }}
+                      sx={{ 
+                        mb: 1,
+                        '& .MuiOutlinedInput-root': {
+                          '&:hover fieldset': {
+                            borderColor: 'primary.main',
+                          }
+                        }
+                      }}
                     />
 
                     <Typography 
@@ -133,7 +150,10 @@ export const Login = () => {
                         textAlign: 'right', 
                         mb: 3,
                         color: 'primary.main',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        '&:hover': {
+                          color: 'primary.dark'
+                        }
                       }}
                     >
                       Forgot password?
@@ -146,9 +166,12 @@ export const Login = () => {
                       disabled={isLoading}
                       sx={{
                         py: 1.5,
-                        bgcolor: '#4338ca',
+                        bgcolor: 'primary.main',
+                        fontWeight: 600,
+                        textTransform: 'none',
+                        fontSize: '1rem',
                         '&:hover': {
-                          bgcolor: '#3730a3'
+                          bgcolor: 'primary.dark'
                         }
                       }}
                     >
@@ -163,10 +186,14 @@ export const Login = () => {
                       sx={{
                         mt: 2,
                         py: 1.5,
-                        borderColor: '#4338ca',
-                        color: '#4338ca',
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                        fontWeight: 600,
+                        textTransform: 'none',
+                        fontSize: '1rem',
                         '&:hover': {
-                          borderColor: '#3730a3'
+                          borderColor: 'primary.dark',
+                          bgcolor: 'background.default'
                         }
                       }}
                     >
@@ -187,7 +214,11 @@ export const Login = () => {
                         sx={{
                           color: 'primary.main',
                           ml: 0.5,
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          fontWeight: 600,
+                          '&:hover': {
+                            color: 'primary.dark'
+                          }
                         }}
                       >
                         Sign up
@@ -205,7 +236,7 @@ export const Login = () => {
             xs={12} 
             md={6}
             sx={{
-              bgcolor: '#f3f4f6',
+              bgcolor: 'background.default',
               display: { xs: 'none', md: 'flex' },
               flexDirection: 'column',
               alignItems: 'center',
@@ -223,10 +254,24 @@ export const Login = () => {
                 marginBottom: '2rem'
               }}
             />
-            <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
+            <Typography 
+              variant="h5" 
+              sx={{ 
+                mb: 2, 
+                fontWeight: 700,
+                color: 'text.primary'
+              }}
+            >
               Check Your Project Progress
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography 
+              variant="body1" 
+              sx={{
+                color: 'text.secondary',
+                maxWidth: '80%',
+                lineHeight: 1.6
+              }}
+            >
               Lorem ipsum dolor sit amet tristique volutpat sed pellentesque
               diam augue sed netus.
             </Typography>
@@ -235,4 +280,4 @@ export const Login = () => {
       </Paper>
     </Box>
   );
-}; 
+};
