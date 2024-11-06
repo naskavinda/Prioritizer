@@ -1,36 +1,34 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Login } from './features/auth/components/Login';
-import { Dashboard } from './features/dashboard/components/Dashboard';
+import { router } from './routes/router';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './utils/firebase';
 import 'react-toastify/dist/ReactToastify.css';
+import { Box, CircularProgress } from '@mui/material';
 
 function App() {
-  const [user, loading] = useAuthState(auth);
+  const [loading] = useAuthState(auth);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box
+        sx={{
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route 
-          path="/login" 
-          element={user ? <Navigate to="/dashboard" /> : <Login />} 
-        />
-        <Route 
-          path="/dashboard" 
-          element={user ? <Dashboard /> : <Navigate to="/login" />} 
-        />
-        <Route 
-          path="/" 
-          element={<Navigate to={user ? "/dashboard" : "/login"} />} 
-        />
-      </Routes>
+    <>
+      <RouterProvider router={router} />
       <ToastContainer position="top-right" />
-    </BrowserRouter>
+    </>
   );
 }
 
