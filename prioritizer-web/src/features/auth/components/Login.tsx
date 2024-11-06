@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import { auth } from '../../../utils/firebase';
 import { loginSchema } from '../schemas/loginSchema';
 import projectProgress from '../../../assets/project-progress.png'; // Add your illustration here
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormValues {
   emailOrPhone: string;
@@ -25,12 +26,14 @@ interface LoginFormValues {
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
       setIsLoading(true);
       await signInWithEmailAndPassword(auth, values.emailOrPhone, values.password);
       toast.success('Login successful!');
+      navigate('/dashboard');
     } catch (error) {
       toast.error('Login failed. Please check your credentials.');
       console.error(error);
@@ -45,6 +48,7 @@ export const Login = () => {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       toast.success('Login successful!');
+      navigate('/dashboard');
     } catch (error) {
       toast.error('Google login failed.');
       console.error(error);
@@ -262,7 +266,7 @@ export const Login = () => {
                 color: 'text.primary'
               }}
             >
-              Check Your Project Progress
+              Check Your Tasks Progress
             </Typography>
             <Typography 
               variant="body1" 
