@@ -32,7 +32,7 @@ const drawerWidth = 240;
 export const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const toggleDrawer = () => {
     setOpen(!open);
