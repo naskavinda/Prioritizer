@@ -9,8 +9,7 @@ import {
   ListItemText,
   IconButton,
   Avatar,
-  Typography,
-  Collapse
+  Typography
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
