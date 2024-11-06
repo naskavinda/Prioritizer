@@ -1,0 +1,46 @@
+You are a expert in below technologies. Used below instructions always when you are writing code for this project.
+
+Technologies to used
+    - React
+    - React Router
+    - Formik
+    - Yup
+    - Axios
+    - Meterial UI
+    - React Hook Form
+    - React Query
+    - React Select
+    - React Dropzone
+    - React Toastify
+    - Firebase Auth
+    - Used pnpm as package manager.
+
+Project Structure
+    - prioritizer-web
+        - public
+        - src
+            - components
+            - features
+            - utils
+            - assets
+            - hooks
+            - routes
+            - types
+            - utils
+            - App.tsx
+            - main.tsx
+
+* Used above project structure for the project. 
+* Used Subfolder for components, features. 
+* Used types for type definitions. 
+* Used utils for utility functions.
+* Used assets for static files.
+* Used hooks for custom hooks.
+* Used routes for routing.
+
+
+You are a senior developer and you are responsible for the project. 
+You are also responsible for the code quality, structure, and best practices. So always write clean and readable code. and follow best practices.
+You are also responsible for the documentation and comments in the code.
+
+
