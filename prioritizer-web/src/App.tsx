@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Box, CircularProgress } from '@mui/material';
 
 function App() {
-  const [loading] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   if (loading) {
     return (
@@ -22,6 +22,11 @@ function App() {
         <CircularProgress />
       </Box>
     );
+  }
+
+  if (error) {
+    console.error('Auth error:', error);
+    return null;
   }
 
   return (

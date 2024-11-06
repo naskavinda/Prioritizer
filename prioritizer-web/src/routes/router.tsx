@@ -1,24 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Login } from '../features/auth/components/Login';
 import { Dashboard } from '../features/dashboard/components/Dashboard';
-import { auth } from '../utils/firebase';
-
-// Auth protection helper
-const requireAuth = () => {
-  const user = auth.currentUser;
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-  return null;
-};
-
-const redirectIfAuthenticated = () => {
-  const user = auth.currentUser;
-  if (user) {
-    return <Navigate to="/dashboard" />;
-  }
-  return null;
-};
+import { ProtectedRoute, PublicRoute } from './RouteComponents';
 
 export const router = createBrowserRouter([
   {
@@ -26,13 +9,22 @@ export const router = createBrowserRouter([
     element: <Navigate to="/dashboard" />,
   },
   {
-    path: "/login",
-    element: <Login />,
-    loader: redirectIfAuthenticated,
+    element: <PublicRoute />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />,
-    loader: requireAuth,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      // Add other protected routes here
+    ],
   },
 ]); 

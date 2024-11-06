@@ -65,14 +65,26 @@ export const Sidebar = () => {
         '& .MuiDrawer-paper': {
           width: open ? drawerWidth : 72,
           boxSizing: 'border-box',
-          borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-          transition: 'width 0.2s ease-in-out',
+          borderRight: '1px solid rgba(0, 0, 0, 0.08)',
+          transition: 'all 0.3s ease-in-out',
           overflowX: 'hidden',
-          backgroundColor: '#ffffff',
+          background: 'linear-gradient(180deg, #f8faff 0%, #f0f4ff 100%)',
+          boxShadow: '0 0 20px rgba(0, 0, 0, 0.05)',
         },
       }}
     >
-      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box 
+        sx={{ 
+          p: 2, 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 2,
+          borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+          minHeight: 64,
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(8px)',
+        }}
+      >
         {open && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
             <Avatar 
@@ -81,39 +93,91 @@ export const Sidebar = () => {
               sx={{
                 width: 40,
                 height: 40,
-                bgcolor: 'primary.main' // Fallback color when no photo
+                bgcolor: 'primary.main',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                transition: 'transform 0.2s',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                }
               }}
             >
               {!user?.photoURL && (user?.displayName?.[0] || 'U')}
             </Avatar>
-            <Typography variant="subtitle1" noWrap>
+            <Typography 
+              variant="subtitle1" 
+              noWrap
+              sx={{ 
+                fontWeight: 600,
+                color: 'text.primary'
+              }}
+            >
               {user?.displayName || user?.email || 'User'}
             </Typography>
           </Box>
         )}
-        <IconButton onClick={toggleDrawer}>
+        <IconButton 
+          onClick={toggleDrawer}
+          sx={{
+            backgroundColor: 'background.default',
+            '&:hover': {
+              backgroundColor: 'action.hover',
+            },
+            transition: 'all 0.2s',
+          }}
+        >
           {open ? <ChevronLeftIcon /> : <MenuIcon />}
         </IconButton>
       </Box>
 
       {/* Main Menu Items */}
-      <List sx={{ flex: 1 }}>
+      <List sx={{ 
+        flex: 1, 
+        pt: 2,
+        '& .MuiListItemButton-root': {
+          background: 'rgba(255, 255, 255, 0.5)',
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.9)',
+          }
+        }
+      }}>
         {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
+          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
             <ListItemButton
               onClick={() => navigate(item.path)}
               sx={{
                 minHeight: 48,
                 px: 2.5,
+                mx: 1,
+                borderRadius: 1.5,
                 justifyContent: open ? 'initial' : 'center',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                  '& .MuiListItemIcon-root': {
+                    color: 'primary.main',
+                  },
+                },
+                transition: 'all 0.2s',
               }}
             >
-              <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', justifyContent: 'center' }}>
+              <ListItemIcon 
+                sx={{ 
+                  minWidth: 0, 
+                  mr: open ? 2 : 'auto', 
+                  justifyContent: 'center',
+                  color: 'text.secondary',
+                  transition: 'color 0.2s',
+                }}
+              >
                 {item.icon}
               </ListItemIcon>
               <ListItemText 
                 primary={item.text} 
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ 
+                  opacity: open ? 1 : 0,
+                  '& .MuiTypography-root': {
+                    fontWeight: 500,
+                  }
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -121,42 +185,101 @@ export const Sidebar = () => {
       </List>
 
       {/* Bottom Menu Items */}
-      <List>
+      <List sx={{ 
+        borderTop: '1px solid rgba(0, 0, 0, 0.08)', 
+        pt: 2, 
+        pb: 2,
+        background: 'rgba(255, 255, 255, 0.5)',
+        '& .MuiListItemButton-root': {
+          background: 'rgba(255, 255, 255, 0.5)',
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.9)',
+          }
+        }
+      }}>
         {bottomMenuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
+          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
             <ListItemButton
               onClick={() => navigate(item.path)}
               sx={{
                 minHeight: 48,
                 px: 2.5,
+                mx: 1,
+                borderRadius: 1.5,
                 justifyContent: open ? 'initial' : 'center',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                  '& .MuiListItemIcon-root': {
+                    color: 'primary.main',
+                  },
+                },
+                transition: 'all 0.2s',
               }}
             >
-              <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', justifyContent: 'center' }}>
+              <ListItemIcon 
+                sx={{ 
+                  minWidth: 0, 
+                  mr: open ? 2 : 'auto', 
+                  justifyContent: 'center',
+                  color: 'text.secondary',
+                  transition: 'color 0.2s',
+                }}
+              >
                 {item.icon}
               </ListItemIcon>
               <ListItemText 
                 primary={item.text} 
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ 
+                  opacity: open ? 1 : 0,
+                  '& .MuiTypography-root': {
+                    fontWeight: 500,
+                  }
+                }}
               />
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
+        <ListItem disablePadding sx={{ mb: 0.5 }}>
           <ListItemButton
             onClick={handleLogout}
             sx={{
               minHeight: 48,
               px: 2.5,
+              mx: 1,
+              borderRadius: 1.5,
               justifyContent: open ? 'initial' : 'center',
+              background: 'rgba(255, 255, 255, 0.5)',
+              '&:hover': {
+                background: 'rgba(255, 82, 82, 0.1)',
+                '& .MuiListItemIcon-root': {
+                  color: 'error.main',
+                },
+                '& .MuiListItemText-primary': {
+                  color: 'error.main',
+                },
+              },
+              transition: 'all 0.2s',
             }}
           >
-            <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', justifyContent: 'center' }}>
+            <ListItemIcon 
+              sx={{ 
+                minWidth: 0, 
+                mr: open ? 2 : 'auto', 
+                justifyContent: 'center',
+                color: 'text.secondary',
+                transition: 'color 0.2s',
+              }}
+            >
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText 
               primary="Logout" 
-              sx={{ opacity: open ? 1 : 0 }}
+              sx={{ 
+                opacity: open ? 1 : 0,
+                '& .MuiTypography-root': {
+                  fontWeight: 500,
+                }
+              }}
             />
           </ListItemButton>
         </ListItem>
