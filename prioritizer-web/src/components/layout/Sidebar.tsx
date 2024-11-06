@@ -45,7 +45,7 @@ export const Sidebar = () => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-    { text: 'Audience', icon: <PersonIcon />, path: '/audience' },
+    { text: 'Tasks', icon: <PersonIcon />, path: '/tasks' },
     { text: 'Tools', icon: <ToolsIcon />, path: '/tools' },
     { text: 'Templates', icon: <TemplatesIcon />, path: '/templates' },
     { text: 'Projects', icon: <ProjectsIcon />, path: '/projects' },

@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Login } from '../features/auth/components/Login';
 import { Dashboard } from '../features/dashboard/components/Dashboard';
+import { Tasks } from '../features/tasks/components/Tasks';
 import { ProtectedRoute, PublicRoute } from './RouteComponents';
 
 export const router = createBrowserRouter([
@@ -24,7 +25,10 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
       },
-      // Add other protected routes here
+      {
+        path: "/tasks",
+        element: <Tasks />,
+      },
     ],
   },
 ]); 
