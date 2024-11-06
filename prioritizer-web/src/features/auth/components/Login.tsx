@@ -62,7 +62,7 @@ export const Login = () => {
       sx={{
         width: '100vw',
         height: '100vh',
-        background: '#f5f5f5',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
