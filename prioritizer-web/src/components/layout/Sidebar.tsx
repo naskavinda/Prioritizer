@@ -25,13 +25,14 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../utils/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const drawerWidth = 240;
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  const [user, loading] = useAuthState(auth);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -74,9 +75,19 @@ export const Sidebar = () => {
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
         {open && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
-            <Avatar src={user?.photoURL || undefined} />
+            <Avatar 
+              src={user?.photoURL || undefined}
+              alt={user?.displayName || 'User'}
+              sx={{
+                width: 40,
+                height: 40,
+                bgcolor: 'primary.main' // Fallback color when no photo
+              }}
+            >
+              {!user?.photoURL && (user?.displayName?.[0] || 'U')}
+            </Avatar>
             <Typography variant="subtitle1" noWrap>
-              {user?.displayName || 'User'}
+              {user?.displayName || user?.email || 'User'}
             </Typography>
           </Box>
         )}
