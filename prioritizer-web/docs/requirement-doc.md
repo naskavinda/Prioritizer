@@ -1,0 +1,11 @@
+Properties in the Task:
+    - id: string
+    - title: string
+    - description: string
+    - priority: string
+    - status: string
+    - createdAt: Date
+    - updatedAt: Date (should have all the update timestamps)
+    - dueDates: Date
+    - completedDate: Date
+    - WorkingDays: Date[]

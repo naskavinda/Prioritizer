@@ -2,11 +2,7 @@ import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Paper, Typography, Box } from '@mui/material';
 import { TaskItem } from './TaskItem';
-
-interface Task {
-  id: string;
-  title: string;
-}
+import { Task } from '../types/task.types';
 
 interface TaskSectionProps {
   id: string;
@@ -39,8 +35,7 @@ export const TaskSection = ({ id, title, tasks }: TaskSectionProps) => {
           {tasks.map((task) => (
             <TaskItem 
               key={task.id} 
-              id={task.id} 
-              title={task.title} 
+              task={task}
             />
           ))}
         </SortableContext>

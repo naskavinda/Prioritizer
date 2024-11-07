@@ -30,10 +30,19 @@ import {
 } from '@dnd-kit/sortable';
 import { TaskSection } from './TaskSection';
 import { TaskItem } from './TaskItem';
+import { Task } from '../types/task.types';
 
 interface Task {
   id: string;
   title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low';
+  status: 'in-progress' | 'todo' | 'completed';
+  createdAt: Date;
+  updatedAt: Date;
+  completedDate?: Date;
+  dueDates: Date;
+  workingDays: Date[];
 }
 
 interface TaskSection {
@@ -42,6 +51,52 @@ interface TaskSection {
   tasks: Task[];
 }
 
+const mockTasks: Task[] = [
+  {
+    id: 'task-1',
+    title: 'Complete Project Proposal',
+    description: 'Write and submit the project proposal for client review',
+    priority: 'high',
+    status: 'in-progress',
+    createdAt: new Date('2024-03-10T10:00:00'),
+    updatedAt: new Date('2024-03-11T15:30:00'),
+    dueDates: new Date('2024-03-15'),
+    workingDays: [
+      new Date('2024-03-11'),
+      new Date('2024-03-12'),
+      new Date('2024-03-13'),
+    ],
+  },
+  {
+    id: 'task-2',
+    title: 'Review Documentation',
+    description: 'Review and update project documentation',
+    priority: 'medium',
+    status: 'todo',
+    createdAt: new Date('2024-03-11T09:00:00'),
+    updatedAt: new Date('2024-03-11T09:00:00'),
+    dueDates: new Date('2024-03-14'),
+    workingDays: [
+      new Date('2024-03-12'),
+      new Date('2024-03-13'),
+    ],
+  },
+  {
+    id: 'task-3',
+    title: 'Team Meeting',
+    description: 'Weekly team sync meeting',
+    priority: 'low',
+    status: 'completed',
+    createdAt: new Date('2024-03-09T11:00:00'),
+    updatedAt: new Date('2024-03-11T16:00:00'),
+    completedDate: new Date('2024-03-11T16:00:00'),
+    dueDates: new Date('2024-03-11'),
+    workingDays: [
+      new Date('2024-03-11'),
+    ],
+  },
+];
+
 export const Tasks = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -49,30 +104,17 @@ export const Tasks = () => {
     {
       id: 'today',
       title: "Today's Tasks",
-      tasks: [
-        { id: 'task-1', title: 'Task 1' },
-        { id: 'task-2', title: 'Task 2' },
-        { id: 'task-3', title: 'Task 3' },
-      ],
+      tasks: mockTasks.slice(0, 1),
     },
     {
       id: 'tomorrow',
       title: 'Tomorrow Tasks',
-      tasks: [
-        { id: 'task-4', title: 'Task 4' },
-        { id: 'task-5', title: 'Task 5' },
-        { id: 'task-6', title: 'Task 6' },
-      ],
+      tasks: mockTasks.slice(1, 2),
     },
     {
       id: 'todo',
       title: 'TODO Tasks',
-      tasks: [
-        { id: 'task-7', title: 'Task 7' },
-        { id: 'task-8', title: 'Task 8' },
-        { id: 'task-9', title: 'Task 9' },
-        { id: 'task-9', title: 'Task 10' },
-      ],
+      tasks: mockTasks.slice(2),
     },
   ]);
 
@@ -235,7 +277,7 @@ export const Tasks = () => {
             />
           ))}
           <DragOverlay>
-            {activeTask ? <TaskItem id={activeTask.id} title={activeTask.title} /> : null}
+            {activeTask ? <TaskItem task={activeTask} /> : null}
           </DragOverlay>
         </DndContext>
       </Paper>
