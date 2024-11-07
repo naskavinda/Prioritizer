@@ -71,3 +71,26 @@ button:focus-visible {
   padding: 0;
   box-sizing: border-box;
 }
+
+.mui-datepicker {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.mui-datepicker:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
