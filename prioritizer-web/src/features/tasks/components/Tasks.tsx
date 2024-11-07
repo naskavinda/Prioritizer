@@ -32,19 +32,7 @@ import { TaskSection } from './TaskSection';
 import { TaskItem } from './TaskItem';
 import { Task } from '../types/task.types';
 
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  priority: 'high' | 'medium' | 'low';
-  status: 'in-progress' | 'todo' | 'completed';
-  createdAt: Date;
-  updatedAt: Date;
-  completedDate?: Date;
-  dueDates: Date;
-  workingDays: Date[];
-}
-
+// Add this interface before the Tasks component
 interface TaskSection {
   id: string;
   title: string;
@@ -129,9 +117,9 @@ export const Tasks = () => {
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
     const activeSection = sections.find(section =>
-      section.tasks.some(task => task.id === active.id)
+      section.tasks.some((task: Task) => task.id === active.id)
     );
-    const task = activeSection?.tasks.find(task => task.id === active.id);
+    const task = activeSection?.tasks.find((task: Task) => task.id === active.id);
     if (task) {
       setActiveTask(task);
     }
