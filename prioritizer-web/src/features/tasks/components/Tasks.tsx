@@ -54,6 +54,22 @@ const mockTasks: Task[] = [
       new Date('2024-03-12'),
       new Date('2024-03-13'),
     ],
+    notes: [
+      {
+        id: '1',
+        title: 'Draft Status',
+        content: 'Initial draft completed',
+        createdAt: new Date('2024-03-10T14:00:00'),
+        updatedAt: new Date('2024-03-10T14:00:00'),
+      },
+      {
+        id: '2',
+        title: 'Review Feedback',
+        content: 'Reviewed by team lead - needs revision',
+        createdAt: new Date('2024-03-11T09:00:00'),
+        updatedAt: new Date('2024-03-11T09:00:00'),
+      }
+    ]
   },
   {
     id: 'task-2',
@@ -68,6 +84,7 @@ const mockTasks: Task[] = [
       new Date('2024-03-12'),
       new Date('2024-03-13'),
     ],
+    notes: []
   },
   {
     id: 'task-3',
@@ -82,6 +99,7 @@ const mockTasks: Task[] = [
     workingDays: [
       new Date('2024-03-11'),
     ],
+    notes: []
   },
 ];
 

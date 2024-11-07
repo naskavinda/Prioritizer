@@ -1,3 +1,11 @@
+export interface TaskNote {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -9,6 +17,7 @@ export interface Task {
   dueDates: Date;
   completedDate?: Date;
   workingDays: Date[];
+  notes: TaskNote[];
 }
 
 export interface TaskSection {

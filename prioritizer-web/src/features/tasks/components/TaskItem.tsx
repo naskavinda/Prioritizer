@@ -22,6 +22,8 @@ import {
   AccessTime as TimeIcon,
   Flag as FlagIcon,
   MoreVert as MoreIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon
 } from '@mui/icons-material';
 import { useState } from 'react';
 import { Task } from '../types/task.types';
@@ -87,66 +89,103 @@ export const TaskItem = ({ task, onUpdate }: TaskItemProps) => {
         </Box>
       </DialogTitle>
       <DialogContent dividers>
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            Description
-          </Typography>
-          <Typography>{task.description}</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: 4, mb: 3 }}>
-          <Box>
+        <Stack spacing={3}>
+          <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              Priority
+              Description
             </Typography>
-            <Chip
-              size="small"
-              icon={<FlagIcon />}
-              label={task.priority}
-              color={priorityColors[task.priority]}
-            />
+            <Typography>{task.description}</Typography>
           </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              Due Date
-            </Typography>
-            <Typography>{new Date(task.dueDates).toLocaleDateString()}</Typography>
-          </Box>
-        </Box>
 
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            Timeline
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Typography variant="body2">
-              Created: {new Date(task.createdAt).toLocaleString()}
-            </Typography>
-            <Typography variant="body2">
-              Last Updated: {new Date(task.updatedAt).toLocaleString()}
-            </Typography>
-            {task.completedDate && (
-              <Typography variant="body2">
-                Completed: {new Date(task.completedDate).toLocaleString()}
+          <Box sx={{ display: 'flex', gap: 4, mb: 3 }}>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                Priority
               </Typography>
+              <Chip
+                size="small"
+                icon={<FlagIcon />}
+                label={task.priority}
+                color={priorityColors[task.priority]}
+              />
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                Due Date
+              </Typography>
+              <Typography>{new Date(task.dueDates).toLocaleDateString()}</Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              Timeline
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography variant="body2">
+                Created: {new Date(task.createdAt).toLocaleString()}
+              </Typography>
+              <Typography variant="body2">
+                Last Updated: {new Date(task.updatedAt).toLocaleString()}
+              </Typography>
+              {task.completedDate && (
+                <Typography variant="body2">
+                  Completed: {new Date(task.completedDate).toLocaleString()}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              Working Days
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {task.workingDays.map((day, index) => (
+                <Chip
+                  key={index}
+                  size="small"
+                  label={new Date(day).toLocaleDateString()}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              Notes
+            </Typography>
+            {task.notes.length === 0 ? (
+              <Typography color="text.secondary" variant="body2">
+                No notes added yet
+              </Typography>
+            ) : (
+              <Stack spacing={2}>
+                {task.notes.map((note) => (
+                  <Paper
+                    key={note.id}
+                    variant="outlined"
+                    sx={{ p: 2 }}
+                  >
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+                          {note.title || 'Untitled Note'}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {new Date(note.createdAt).toLocaleString()}
+                        </Typography>
+                      </Box>
+                      <Typography variant="body2">
+                        {note.content}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                ))}
+              </Stack>
             )}
           </Box>
-        </Box>
-
-        <Box>
-          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            Working Days
-          </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {task.workingDays.map((day, index) => (
-              <Chip
-                key={index}
-                size="small"
-                label={new Date(day).toLocaleDateString()}
-              />
-            ))}
-          </Box>
-        </Box>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setIsDialogOpen(false)}>Close</Button>
@@ -266,6 +305,100 @@ export const TaskItem = ({ task, onUpdate }: TaskItemProps) => {
               </Box>
             </Box>
           )}
+
+          <Box sx={{ mb: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                Notes
+              </Typography>
+              <Button
+                startIcon={<AddIcon />}
+                size="small"
+                onClick={() => {
+                  setEditedTask({
+                    ...editedTask,
+                    notes: [...editedTask.notes, {
+                      id: crypto.randomUUID(),
+                      title: '',
+                      content: '',
+                      createdAt: new Date(),
+                      updatedAt: new Date()
+                    }]
+                  });
+                }}
+              >
+                Add Note
+              </Button>
+            </Box>
+            <Stack spacing={2}>
+              {editedTask.notes.map((note, index) => (
+                <Paper
+                  key={note.id}
+                  variant="outlined"
+                  sx={{ p: 2 }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Box sx={{ flex: 1, mr: 2 }}>
+                      <Typography variant="caption" color="text.secondary">
+                        {new Date(note.createdAt).toLocaleString()}
+                      </Typography>
+                    </Box>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => {
+                        setEditedTask({
+                          ...editedTask,
+                          notes: editedTask.notes.filter(n => n.id !== note.id)
+                        });
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Note Title"
+                    value={note.title}
+                    onChange={(e) => {
+                      const updatedNotes = [...editedTask.notes];
+                      updatedNotes[index] = {
+                        ...note,
+                        title: e.target.value,
+                        updatedAt: new Date()
+                      };
+                      setEditedTask({
+                        ...editedTask,
+                        notes: updatedNotes
+                      });
+                    }}
+                    sx={{ mb: 2 }}
+                  />
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={2}
+                    label="Note Content"
+                    value={note.content}
+                    onChange={(e) => {
+                      const updatedNotes = [...editedTask.notes];
+                      updatedNotes[index] = {
+                        ...note,
+                        content: e.target.value,
+                        updatedAt: new Date()
+                      };
+                      setEditedTask({
+                        ...editedTask,
+                        notes: updatedNotes
+                      });
+                    }}
+                    placeholder="Enter note content..."
+                  />
+                </Paper>
+              ))}
+            </Stack>
+          </Box>
         </Stack>
       </DialogContent>
       <DialogActions>
